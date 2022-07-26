@@ -4,10 +4,11 @@ import Error404 from "./views/Error404.js";
 import Loading from "./views/Loading.js";
 import Login from "./views/Login.js";
 import LoginEvent from "./auth.js";
-import Register from "./views/Register.js"
+import Register from "./views/Register.js";
 import {RegisterEvent} from "./views/Register.js";
 import UserIndex, {UserEvents} from "./views/User.js";
 import Logout, {LogoutEvents} from "./views/Logout.js";
+import AddAMovieHTMLFunction, {AddAMovieJSFunction} from "./views/add-a-movie.js";
 
 
 /**
@@ -63,6 +64,13 @@ export default function router(URI) {
             uri: '/about',
             title: 'About',
             viewEvent: MoviesJSFunction
+        },
+        '/add-a-movie': {
+            returnView: AddAMovieHTMLFunction,
+            state:{},
+            uri: '/add-a-movie',
+            title: 'Add A Movie!',
+            viewEvent: AddAMovieJSFunction
         },
         '/error': {
             returnView: Error404,
