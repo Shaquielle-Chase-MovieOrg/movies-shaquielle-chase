@@ -16,3 +16,9 @@ footer {
     width: 100%;
     height: 2.5rem;
 }
+#HomePage {
+    color: #efcd21;
+    text-decoration: underline;
+    background-image: url("/assets/istockphoto-1076588860-612x612.jpeg");
+    background-position: left;
+}

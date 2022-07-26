@@ -1,4 +1,4 @@
-import Home, {HomeEvents} from "./views/Home.js";
+import HomeHTMLFunction, {HomeJSFunction} from "./views/Home.js";
 import About, {AboutEvents} from "./views/About.js";
 import Error404 from "./views/Error404.js";
 import Loading from "./views/Loading.js";
@@ -17,11 +17,11 @@ import Logout, {LogoutEvents} from "./views/Logout.js";
 export default function router(URI) {
     const routes = {
         '/': {
-            returnView: Home,
+            returnView: HomeHTMLFunction,
             state: {},
             uri: '/',
             title: 'Home',
-            viewEvent: HomeEvents
+            viewEvent: HomeJSFunction
         },
         '/logout': {
             returnView: Logout,
