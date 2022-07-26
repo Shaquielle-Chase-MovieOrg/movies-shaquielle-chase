@@ -1,5 +1,5 @@
-import HomeHTMLFunction, {HomeJSFunction} from "./views/Home.js";
-import About, {AboutEvents} from "./views/About.js";
+import HomeHTMLFunction , {HomeJSFunction} from "./views/Home.js";
+import MoviesHTMLFunction, {MoviesJSFunction} from "./views/About.js";
 import Error404 from "./views/Error404.js";
 import Loading from "./views/Loading.js";
 import Login from "./views/Login.js";
@@ -8,6 +8,7 @@ import Register from "./views/Register.js"
 import {RegisterEvent} from "./views/Register.js";
 import UserIndex, {UserEvents} from "./views/User.js";
 import Logout, {LogoutEvents} from "./views/Logout.js";
+
 
 /**
  * Returns the route object for a specific route based on the given URI
@@ -52,11 +53,16 @@ export default function router(URI) {
             viewEvent: UserEvents
         },
         '/about': {
-            returnView: About,
-            state: {},
+            returnView: MoviesHTMLFunction,
+            state: {movies: {
+                    url: "https://glory-cedar-barge.glitch.me/movies",
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                }},
             uri: '/about',
             title: 'About',
-            viewEvent: AboutEvents
+            viewEvent: MoviesJSFunction
         },
         '/error': {
             returnView: Error404,
