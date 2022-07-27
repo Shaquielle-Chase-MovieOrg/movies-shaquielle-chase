@@ -1,0 +1,32 @@
+{
+  "movies": [
+    {
+      "title": "Resident Evil",
+      "director": "Paul W. S. Anderson",
+      "rating": "5",
+      "src": "https://m.media-amazon.com/images/M/MV5BZmI1ZGRhNDYtOGVjZC00MmUyLThlNTktMTQyZGE3MzE1ZTdlXkEyXkFqcGdeQXVyNDE5MTU2MDE@._V1_.jpg",
+      "id": 1
+    },
+    {
+      "title": "Superbad",
+      "director": "Greg Mottola",
+      "rating": "5",
+      "src": "https://m.media-amazon.com/images/I/51aHfqvu3-L._AC_.jpg",
+      "id": 2
+    },
+    {
+      "title": "John Wick",
+      "director": "A Guy",
+      "rating": "5",
+      "src": "https://m.media-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_.jpg",
+      "id": 3
+    },
+    {
+      "title": "Monster Inc",
+      "director": "Pixar",
+      "rating": "5",
+      "src": "https://m.media-amazon.com/images/M/MV5BMTY1NTI0ODUyOF5BMl5BanBnXkFtZTgwNTEyNjQ0MDE@._V1_FMjpg_UX1000_.jpg",
+      "id": 4
+    }
+  ]
+}

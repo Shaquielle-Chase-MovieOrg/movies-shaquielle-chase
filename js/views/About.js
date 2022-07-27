@@ -10,12 +10,12 @@ export default function MoviesHTMLFunction(props) {
         </header>
 <!--        <a id="addMoviePlusBtn" data-link href="/add-a-movie" target="_blank">+</a>-->
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#addMovieModal">
           +
         </button>
         
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addMovieModal" tabindex="-1" aria-labelledby="addMovieModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -33,6 +33,32 @@ export default function MoviesHTMLFunction(props) {
                         <input class="form-control text-center" list="datalistOptions" id="newMovieRating" placeholder="Enter a movie rating 0-5">
                     </form>
                     <button class="form-control btn insert-btn mt-3" data-bs-dismiss="modal" id="addMovieBtn">Add Movie</button>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="editMovieModal" tabindex="-1" aria-labelledby="editMovieModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="container text-center">
+                    <h1>Edit Movie</h1>
+                    <form>
+                        <label for="editMovieTitle" class="form-label">Title:</label>
+                        <input class="form-control text-center" list="datalistOptions" id="editMovieTitle">
+                        <label for="editMovieDirector" class="form-label">Director:</label>
+                        <input class="form-control text-center" list="datalistOptions" id="editMovieDirector">
+                        <label for="editMovieRating" class="form-label">Rating:</label>
+                        <input class="form-control text-center" list="datalistOptions" id="editMovieRating">
+                    </form>
+                    <button class="form-control btn insert-btn mt-3" data-bs-dismiss="modal" id="editMovieSubmitBtn">Save Movie</button>
                 </div>
               </div>
               <div class="modal-footer">
@@ -60,41 +86,15 @@ export default function MoviesHTMLFunction(props) {
     function makeMovieCard(movie) {
         return `
     <div class="card col-3 h-100">
-      <img src="assets/jalopy1.jpeg" class="card-img-top" alt="...">
+      <img src="${movie.src}" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-title text-center">${movie.title}</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+        <h5 class="card-title movieTitle text-center">${movie.title}</h5>
+        <p class="card-text"></p>
       </div>
       <div id="movieFoot">
-        <button type="button" class="btn btn-primary editBtn" data-id="${movie.id}" data-bs-toggle="modal" data-bs-target="#editMovieModal"><i class="fa fa-pencil"></i></button>
+        <button type="button" class="btn btn-primary editBtn mb-2" data-id="${movie.id}" data-bs-toggle="modal" data-bs-target="#editMovieModal"><i class="fa fa-pencil"></i></button>
         <!-- Modal -->
-        <div class="modal fade" id="editMovieModal" tabindex="-1" aria-labelledby="editMovieModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <div class="container text-center">
-                    <h1>Edit Movie</h1>
-                    <form>
-                        <label for="editMovieTitle" class="form-label">Title:</label>
-                        <input class="form-control text-center" list="datalistOptions" id="editMovieTitle">
-                        <label for="editMovieDirector" class="form-label">Director:</label>
-                        <input class="form-control text-center" list="datalistOptions" id="editMovieDirector">
-                        <label for="editMovieRating" class="form-label">Rating:</label>
-                        <input class="form-control text-center" list="datalistOptions" id="editMovieRating">
-                    </form>
-                    <button class="form-control btn insert-btn mt-3" data-bs-dismiss="modal" id="editMovieBtn">Save Movie</button>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-            <button class="delBtn btn" data-id="${movie.id}"><i class="fa fa-trash"></i></button>
+            <button class="delBtn btn mb-2" data-id="${movie.id}"><i class="fa fa-trash"></i></button>
         </div>
       </div>
 `
@@ -105,6 +105,45 @@ export default function MoviesHTMLFunction(props) {
 
 export function MoviesJSFunction() {
 
+    let editMovieSubmitBtn = document.getElementById("editMovieSubmitBtn");
+    editMovieSubmitBtn.addEventListener("click", updateMovie, getPoster);
+
+    function updateMovie () {
+
+        const updateMovieTitleInput = document.getElementById(`editMovieTitle`);
+        const updateMovieDirectorInput = document.getElementById(`editMovieDirector`);
+        const updateMovieRatingInput = document.getElementById(`editMovieRating`);
+        const updateMovieTitle = updateMovieTitleInput.value.trim();
+        const updateMovieDirector = updateMovieDirectorInput.value.trim();
+        const updateMovieRating = updateMovieRatingInput.value.trim();
+        let id = this.getAttribute('data-id');
+        console.log(id);
+
+        const movieUpdate = {
+            title: updateMovieTitle,
+            director: updateMovieDirector,
+            rating: updateMovieRating,
+        };
+
+        const requestOptions = {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(movieUpdate)
+        }
+        fetch(`https://glory-cedar-barge.glitch.me/movies/${id}`, requestOptions)
+            .then(function(response) {
+                if(!response.ok) {
+                    console.log("add movie error: " + response.status);
+                } else {
+                    console.log("add movie ok");
+                    createView("/about");
+                }
+            });
+    }
+
+
     let editButton = document.getElementsByClassName(`editBtn`);
     for (let i = 0; i < editButton.length; i++) {
         editButton[i].addEventListener("click", getMovieData)
@@ -114,6 +153,8 @@ export function MoviesJSFunction() {
             method: "GET",
         }
         const id = this.getAttribute(`data-id`)
+        let editbtn = document.getElementById(`editMovieSubmitBtn`);
+        editbtn.setAttribute("data-id", id)
         const getMovieData = await fetch(`https://glory-cedar-barge.glitch.me/movies/${id}`, requestOptions)
             .then(async function (response) {
                 if (!response.ok) {
@@ -167,7 +208,6 @@ function addMovie() {
     const newMovieTitle = newMovieTitleInput.value.trim();
     const newMovieDirector = newMovieDirectorInput.value.trim();
     const newMovieRating = newMovieRatingInput.value.trim();
-    const factInput = document.querySelector("#dogFactText");
     if(newMovieTitle.length < 1 || newMovieDirector.length < 1 || newMovieRating.length === null) {
         alert("Entries cannot be blank!")
         console.log("Entries cannot be blank!");
@@ -199,6 +239,10 @@ function addMovie() {
         });
 }
 
+
+
+// poster path
+// https://image.tmdb.org/t/p/original/[poster_path]
 
 
 
