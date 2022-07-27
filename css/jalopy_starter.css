@@ -41,9 +41,13 @@ footer {
     margin-left: 4px;
     margin-right: 4px;
     margin-bottom: 5px;
-    width: 20rem;
+    width: 18rem;
 }
 #movieListContainer {
-    margin-left: 10rem;
+    margin-left: 6rem;
     margin-right: auto;
+}
+#movieFoot {
+    display: flex;
+    justify-content: space-between;
 }
