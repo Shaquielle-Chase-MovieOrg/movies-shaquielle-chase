@@ -36,5 +36,18 @@ footer {
     color: dodgerblue;
     font-weight: bold;
     font-size: x-large;
-
+}
+.card {
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-bottom: 5px;
+    width: 18rem;
+}
+#movieListContainer {
+    margin-left: 6rem;
+    margin-right: auto;
+}
+#movieFoot {
+    display: flex;
+    justify-content: space-between;
 }
