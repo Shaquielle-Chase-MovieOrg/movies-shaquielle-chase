@@ -67,6 +67,26 @@ export default function MoviesHTMLFunction(props) {
             </div>
           </div>
         </div>
+        <div class="modal fade" id="moreInfoMovieModal" tabindex="-1" aria-labelledby="moreInfoMovieModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="container text-center">
+                    <h1>More Info</h1>
+                    <form>
+                        <p id="moreInfoP"></p>
+                    </form>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
         
         <main>
             <div id="movieListContainer" class="row">
@@ -93,12 +113,11 @@ export default function MoviesHTMLFunction(props) {
       </div>
       <div id="movieFoot">
         <button type="button" class="btn btn-primary editBtn mb-2" data-id="${movie.id}" data-bs-toggle="modal" data-bs-target="#editMovieModal"><i class="fa fa-pencil"></i></button>
-        <!-- Modal -->
-            <button class="delBtn btn mb-2" data-id="${movie.id}"><i class="fa fa-trash"></i></button>
+         <button type="button" class="btn btn-primary moreInfoBtn mb-2" data-id="${movie.id}" data-bs-toggle="modal" data-bs-target="#moreInfoMovieModal">More Info</button>
+        <button class="delBtn btn mb-2" data-id="${movie.id}"><i class="fa fa-trash"></i></button>
         </div>
       </div>
 `
-
     }
 }
 
@@ -106,7 +125,7 @@ export default function MoviesHTMLFunction(props) {
 export function MoviesJSFunction() {
 
     let editMovieSubmitBtn = document.getElementById("editMovieSubmitBtn");
-    editMovieSubmitBtn.addEventListener("click", updateMovie, getPoster);
+    editMovieSubmitBtn.addEventListener("click", updateMovie);
 
     function updateMovie () {
 
@@ -145,8 +164,10 @@ export function MoviesJSFunction() {
 
 
     let editButton = document.getElementsByClassName(`editBtn`);
+    let moreInfoBtn = document.getElementsByClassName(`moreInfoBtn`);
     for (let i = 0; i < editButton.length; i++) {
         editButton[i].addEventListener("click", getMovieData)
+        moreInfoBtn[i].addEventListener("click", getMovieData)
     }
     async function getMovieData () {
         const requestOptions = {
@@ -164,6 +185,8 @@ export function MoviesJSFunction() {
                     return await response.json();
                 }
             });
+        let moreInfoP = document.getElementById(`moreInfoP`);
+        moreInfoP.innerText = getMovieData.overview;
         let titleValue = document.getElementById(`editMovieTitle`);
         titleValue.setAttribute("value", `${getMovieData.title}`)
         let directorValue = document.getElementById(`editMovieDirector`);
@@ -173,7 +196,33 @@ export function MoviesJSFunction() {
         console.log(getMovieData.title);
         console.log(getMovieData.director);
         console.log(getMovieData.rating);
+        console.log(getMovieData.overview);
     }
+
+    // let moreInfoBtn = document.getElementsByClassName(`moreInfoBtn`);
+    // for (let i = 0; i < moreInfoBtn.length; i++) {
+    //     moreInfoBtn[i].addEventListener("click", insertInfo);}
+    //
+    // async function insertInfo () {
+    //     const overviewRequestOptions = {
+    //         method: "GET",
+    //     }
+    //     const id = this.getAttribute(`data-id`)
+    //     let moreInfoBtn = document.getElementById(``);
+    //     editbtn.setAttribute("data-id", id)
+    //     const getMovieData = await fetch(`https://glory-cedar-barge.glitch.me/movies/${id}`, overviewRequestOptions)
+    //         .then(async function (response) {
+    //             if (!response.ok) {
+    //                 console.log("add movie error: " + response.status);
+    //             } else {
+    //                 console.log("add movie ok");
+    //                 return await response.json();
+    //             }
+    //         });
+
+
+
+
 
     let delButton = document.getElementsByClassName('delBtn');
     for (let i = 0; i < delButton.length; i++) {
@@ -200,8 +249,7 @@ export function MoviesJSFunction() {
     const insertMovieBtn = document.querySelector("#addMovieBtn");
     insertMovieBtn.addEventListener("click", addMovie)}
 
-function addMovie() {
-    // make sure user entered something non-blank for the dog fact
+async function addMovie() {
     const newMovieTitleInput = document.getElementById(`newMovieTitle`);
     const newMovieDirectorInput = document.getElementById(`newMovieDirector`);
     const newMovieRatingInput = document.getElementById(`newMovieRating`);
@@ -213,10 +261,30 @@ function addMovie() {
         console.log("Entries cannot be blank!");
         return;
     }
+
+        const posterRequestOptions = {
+            method: "GET",
+        }
+
+        const getMoviePoster = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=6ce0041b387bdc16ed1d50bd0aed4f0a&query=${newMovieTitle}`, posterRequestOptions)
+            .then(async function (response) {
+                if (!response.ok) {
+                    console.log("add movie error: " + response.status);
+                } else {
+                    console.log("add movie ok");
+                    return await response.json();
+                }
+            });
+    console.log(getMoviePoster.results[0].poster_path);
+    console.log(getMoviePoster.results[0].overview);
+    let newMoviePoster = `https://image.tmdb.org/t/p/original/${getMoviePoster.results[0].poster_path}`;
+    let newMovieOverview = getMoviePoster.results[0].overview;
     const newMovie = {
         title: newMovieTitle,
         director: newMovieDirector,
         rating: newMovieRating,
+        src: newMoviePoster,
+        overview: newMovieOverview
     };
 
     console.log("Movie is ready to be inserted");
@@ -238,6 +306,7 @@ function addMovie() {
             }
         });
 }
+
 
 
 
