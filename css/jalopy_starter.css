@@ -51,3 +51,9 @@ footer {
     display: flex;
     justify-content: space-between;
 }
+.card-img-top {
+    height: 50vh;
+}
+.hideNav {
+    display: none;
+}

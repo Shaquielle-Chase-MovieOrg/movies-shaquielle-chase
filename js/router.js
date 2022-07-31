@@ -1,5 +1,4 @@
-import HomeHTMLFunction , {HomeJSFunction} from "./views/Home.js";
-import MoviesHTMLFunction, {MoviesJSFunction} from "./views/About.js";
+import MoviesHTMLFunction, {MoviesJSFunction} from "./views/home.js";
 import Error404 from "./views/Error404.js";
 import Loading from "./views/Loading.js";
 import Login from "./views/Login.js";
@@ -18,12 +17,17 @@ import AddAMovieHTMLFunction, {AddAMovieJSFunction} from "./views/add-a-movie.js
  */
 export default function router(URI) {
     const routes = {
-        '/': {
-            returnView: HomeHTMLFunction,
-            state: {},
-            uri: '/',
-            title: 'Home',
-            viewEvent: HomeJSFunction
+        '/movies': {
+            returnView: MoviesHTMLFunction,
+            state: {movies: {
+                    url: "https://glory-cedar-barge.glitch.me/movies",
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                }},
+            uri: '/movies',
+            title: 'Movies',
+            viewEvent: MoviesJSFunction
         },
         '/logout': {
             returnView: Logout,
@@ -53,18 +57,18 @@ export default function router(URI) {
             title: 'User Info',
             viewEvent: UserEvents
         },
-        '/about': {
-            returnView: MoviesHTMLFunction,
-            state: {movies: {
-                    url: "https://glory-cedar-barge.glitch.me/movies",
-                    headers: {
-                        'Accept': 'application/json',
-                    }
-                }},
-            uri: '/about',
-            title: 'About',
-            viewEvent: MoviesJSFunction
-        },
+        // '/about': {
+        //     returnView: MoviesHTMLFunction,
+        //     state: {movies: {
+        //             url: "https://glory-cedar-barge.glitch.me/movies",
+        //             headers: {
+        //                 'Accept': 'application/json',
+        //             }
+        //         }},
+        //     uri: '/about',
+        //     title: 'About',
+        //     viewEvent: MoviesJSFunction
+        // },
         '/add-a-movie': {
             returnView: AddAMovieHTMLFunction,
             state:{},
