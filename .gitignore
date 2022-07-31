@@ -1,0 +1,20 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+.idea/
+*.iml
+node_modules/
+main.js
+*.map
+.DS_Store
+private_constants.js
+config.js
+keys.js
+application.properties
+.env
+.idea
