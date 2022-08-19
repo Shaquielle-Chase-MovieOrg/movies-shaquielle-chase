@@ -17,6 +17,18 @@ import AddAMovieHTMLFunction, {AddAMovieJSFunction} from "./views/add-a-movie.js
  */
 export default function router(URI) {
     const routes = {
+        '/': {
+            returnView: MoviesHTMLFunction,
+            state: {movies: {
+                    url: "https://glory-cedar-barge.glitch.me/movies",
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                }},
+            uri: '/movies',
+            title: 'Movies',
+            viewEvent: MoviesJSFunction
+        },
         '/movies': {
             returnView: MoviesHTMLFunction,
             state: {movies: {

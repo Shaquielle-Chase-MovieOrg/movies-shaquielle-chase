@@ -265,7 +265,7 @@ async function addMovie() {
     const posterRequestOptions = {
         method: "GET",
     }
-
+// Get movie id for each movie from initial API call and push that id into a separate api call for the director and cast.
     const getMoviePoster = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${THE_MOVIE_DB_API_KEY}&query=${newMovieTitle}`, posterRequestOptions)
         .then(async function (response) {
             if (!response.ok) {
@@ -277,6 +277,7 @@ async function addMovie() {
         });
     console.log(getMoviePoster.results[0].poster_path);
     console.log(getMoviePoster.results[0].overview);
+    // let newMovieDirector =
     let newMoviePoster = `https://image.tmdb.org/t/p/original/${getMoviePoster.results[0].poster_path}`;
     let newMovieOverview = getMoviePoster.results[0].overview;
     const newMovie = {
