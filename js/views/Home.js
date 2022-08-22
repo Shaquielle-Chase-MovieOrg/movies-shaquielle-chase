@@ -246,6 +246,7 @@ async function addMovie() {
         method: "GET",
     }
 // Get movie id for each movie from initial API call and push that id into a separate api call for the director and cast.
+// Getting movie ID ok, now need to make multiple API calls to grab cast/crew information using the movie ID from a different API endpoint.
     const getMoviePoster = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${THE_MOVIE_DB_API_KEY}&query=${newMovieTitle}`, posterRequestOptions)
         .then(async function (response) {
             if (!response.ok) {
