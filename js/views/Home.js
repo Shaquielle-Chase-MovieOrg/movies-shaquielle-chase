@@ -27,10 +27,10 @@ export default function MoviesHTMLFunction(props) {
                     <form>
                         <label for="newMovieTitle" class="form-label">Title:</label>
                         <input class="form-control text-center" list="datalistOptions" id="newMovieTitle" placeholder="Enter new movie title">
-                        <label for="newMovieDirector" class="form-label">Director:</label>
-                        <input class="form-control text-center" list="datalistOptions" id="newMovieDirector" placeholder="Enter the Director's name">
-                        <label for="newMovieRating" class="form-label">Rating:</label>
-                        <input class="form-control text-center" list="datalistOptions" id="newMovieRating" placeholder="Enter a movie rating 0-5">
+<!--                        <label for="newMovieDirector" class="form-label">Director:</label>-->
+<!--                        <input class="form-control text-center" list="datalistOptions" id="newMovieDirector" placeholder="Enter the Director's name">-->
+<!--                        <label for="newMovieRating" class="form-label">Rating:</label>-->
+<!--                        <input class="form-control text-center" list="datalistOptions" id="newMovieRating" placeholder="Enter a movie rating 0-5">-->
                     </form>
                     <button class="form-control btn insert-btn mt-3" data-bs-dismiss="modal" id="addMovieBtn">Add Movie</button>
                 </div>
@@ -53,10 +53,6 @@ export default function MoviesHTMLFunction(props) {
                     <form>
                         <label for="editMovieTitle" class="form-label">Title:</label>
                         <input class="form-control text-center" list="datalistOptions" id="editMovieTitle">
-                        <label for="editMovieDirector" class="form-label">Director:</label>
-                        <input class="form-control text-center" list="datalistOptions" id="editMovieDirector">
-                        <label for="editMovieRating" class="form-label">Rating:</label>
-                        <input class="form-control text-center" list="datalistOptions" id="editMovieRating">
                     </form>
                     <button class="form-control btn insert-btn mt-3" data-bs-dismiss="modal" id="editMovieSubmitBtn">Save Movie</button>
                 </div>
@@ -130,18 +126,12 @@ export function MoviesJSFunction() {
     function updateMovie () {
 
         const updateMovieTitleInput = document.getElementById(`editMovieTitle`);
-        const updateMovieDirectorInput = document.getElementById(`editMovieDirector`);
-        const updateMovieRatingInput = document.getElementById(`editMovieRating`);
         const updateMovieTitle = updateMovieTitleInput.value.trim();
-        const updateMovieDirector = updateMovieDirectorInput.value.trim();
-        const updateMovieRating = updateMovieRatingInput.value.trim();
         let id = this.getAttribute('data-id');
         console.log(id);
 
         const movieUpdate = {
             title: updateMovieTitle,
-            director: updateMovieDirector,
-            rating: updateMovieRating,
         };
 
         const requestOptions = {
@@ -189,13 +179,7 @@ export function MoviesJSFunction() {
         moreInfoP.innerText = getMovieData.overview;
         let titleValue = document.getElementById(`editMovieTitle`);
         titleValue.setAttribute("value", `${getMovieData.title}`)
-        let directorValue = document.getElementById(`editMovieDirector`);
-        directorValue.setAttribute("value", `${getMovieData.director}`)
-        let ratingValue = document.getElementById(`editMovieRating`);
-        ratingValue.setAttribute("value", `${getMovieData.rating}`)
         console.log(`Title: ${getMovieData.title}`);
-        console.log(`Director: ${getMovieData.director}`);
-        console.log(`Rating: ${getMovieData.rating}`);
         console.log(`Overview: ${getMovieData.overview}`);
     }
 
@@ -251,12 +235,8 @@ export function MoviesJSFunction() {
 
 async function addMovie() {
     const newMovieTitleInput = document.getElementById(`newMovieTitle`);
-    const newMovieDirectorInput = document.getElementById(`newMovieDirector`);
-    const newMovieRatingInput = document.getElementById(`newMovieRating`);
     const newMovieTitle = newMovieTitleInput.value.trim();
-    const newMovieDirector = newMovieDirectorInput.value.trim();
-    const newMovieRating = newMovieRatingInput.value.trim();
-    if(newMovieTitle.length < 1 || newMovieDirector.length < 1 || newMovieRating.length === null) {
+    if(newMovieTitle.length < 1) {
         alert("Entries cannot be blank!")
         console.log("Entries cannot be blank!");
         return;
@@ -277,16 +257,16 @@ async function addMovie() {
         });
     console.log(getMoviePoster.results[0].poster_path);
     console.log(getMoviePoster.results[0].overview);
-    // let newMovieDirector =
     let newMoviePoster = `https://image.tmdb.org/t/p/original/${getMoviePoster.results[0].poster_path}`;
     let newMovieOverview = getMoviePoster.results[0].overview;
+    let movieDBID = getMoviePoster.results[0].id;
+    console.log(movieDBID);
     const newMovie = {
         title: newMovieTitle,
-        director: newMovieDirector,
-        rating: newMovieRating,
         src: newMoviePoster,
         overview: newMovieOverview
     };
+
 
     console.log("Movie is ready to be inserted");
 
