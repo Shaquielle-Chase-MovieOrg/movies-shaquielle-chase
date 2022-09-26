@@ -1,2 +1,2 @@
-#Movies Project
+# Movies Project
 A paired-programming single-page application with basic CRUD functionality. This project allows users to search for movies by name and returns a card with the movie poster, title, director, and plot summary. Through HTML and JavaScript DOM manipulation, users can add, edit, or delete movies from the collection through various modal prompts. The search engine makes use of The Movie Database API (TMDB) and Glitch to serve the backend. CSS and Bootstrap were used for styling.
